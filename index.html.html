@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Absensi Otomatis</title>
+    <script>
+      function isiOtomatis() {
+        const now = new Date();
+        const tanggal = now.toLocaleDateString('id-ID');
+        const waktu = now.toLocaleTimeString('id-ID');
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(pos) {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const lokasi = `https://www.google.com/maps?q=${lat},${lon}`;
+
+            // Ganti URL berikut dengan link pra-pengisian kamu:
+            const formURL =
+              "https://docs.google.com/forms/d/e/1FAIpQLSdbVOqvcAMOrsBriL0itz60wCEKAThfoS90do6TsdN5yU8xLw/viewform?usp=pp_url&entry.467152835=LIVIYO" +
+              "&entry.255194751=" + encodeURIComponent(tanggal) +
+              "&entry.596893991=" + encodeURIComponent(waktu) +
+              "&entry.1441769951=" + encodeURIComponent(lokasi);
+
+            window.location.href = formURL;
+          }, function(error) {
+            alert("Gagal mengambil lokasi: " + error.message);
+          });
+        } else {
+          alert("Browser Anda tidak mendukung GPS.");
+        }
+      }
+    </script>
+  </head>
+  <body onload="isiOtomatis()">
+    <p>Mengambil lokasi, tanggal, dan waktu... Mohon tunggu.</p>
+  </body>
+</html>
